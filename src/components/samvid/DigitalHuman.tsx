@@ -74,8 +74,25 @@ export function DigitalHuman({
   const group = useRef<THREE.Group>(null!);
   const { parts, wireSources } = useBodyGeometries();
 
+  // Smooth, glossy, volumetric skin — pearlescent porcelain lit by the field.
   const surface = useMemo(
-    () => hologramMaterial({ color: PALETTE.core, inner: PALETTE.deep, opacity: 0.55 }),
+    () =>
+      new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color("#dfe9ff"),
+        roughness: 0.18,
+        metalness: 0.05,
+        clearcoat: 1,
+        clearcoatRoughness: 0.12,
+        iridescence: 0.6,
+        iridescenceIOR: 1.4,
+        sheen: 1,
+        sheenColor: new THREE.Color(PALETTE.core),
+        sheenRoughness: 0.5,
+        emissive: new THREE.Color(PALETTE.deep),
+        emissiveIntensity: 0.28,
+        transmission: 0.12,
+        thickness: 0.6,
+      }),
     [],
   );
   const innerCore = useMemo(
@@ -89,26 +106,8 @@ export function DigitalHuman({
       }),
     [],
   );
-  const wireMat = useMemo(
-    () =>
-      new THREE.LineBasicMaterial({
-        color: PALETTE.field,
-        transparent: true,
-        opacity: 0.07,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-      }),
-    [],
-  );
 
-  const bodies = useMemo(
-    () =>
-      parts.map((g, i) => ({
-        geo: g,
-        wire: new THREE.WireframeGeometry(wireSources[i] ?? g),
-      })),
-    [parts, wireSources],
-  );
+  const bodies = useMemo(() => parts.map((g) => ({ geo: g })), [parts]);
 
   const heartGeo = useMemo(() => new THREE.IcosahedronGeometry(0.085, 1), []);
   const heart = useRef<THREE.Mesh>(null!);
@@ -116,11 +115,9 @@ export function DigitalHuman({
   useFrame((_, dt) => {
     const t = sys.current.time;
     const p = sys.current.phase;
-    surface.uniforms['uTime']!.value = t;
     innerCore.uniforms['uTime']!.value = t;
-    surface.uniforms['uPulse']!.value = sys.current.pulse * 0.9;
     innerCore.uniforms['uPulse']!.value = sys.current.pulse;
-    wireMat.opacity = 0.06 + sys.current.pulse * 0.2 + p * 0.04;
+    surface.emissiveIntensity = 0.24 + sys.current.pulse * 0.7 + p * 0.12;
 
     if (group.current) {
       group.current.position.y = -0.2 + Math.sin(t * 0.55) * 0.045;
@@ -147,12 +144,12 @@ export function DigitalHuman({
       onPointerOver={() => (document.body.style.cursor = "pointer")}
       onPointerOut={() => (document.body.style.cursor = "default")}
     >
+      {/* studio-style rig travelling with the figure for the glossy render look */}
+      <pointLight position={[1.6, 2.2, 2.4]} intensity={9} color="#ffffff" distance={14} />
+      <pointLight position={[-2.0, 0.6, 1.2]} intensity={6} color={PALETTE.core} distance={14} />
+      <pointLight position={[0, 0.4, -2.6]} intensity={7} color={PALETTE.field} distance={14} />
       {bodies.map((b, i) => (
-        <group key={i}>
-          <mesh geometry={b.geo} material={surface} />
-          <mesh geometry={b.geo} material={innerCore} scale={0.9} />
-          <lineSegments geometry={b.wire} material={wireMat} />
-        </group>
+        <mesh key={i} geometry={b.geo} material={surface} castShadow={false} />
       ))}
       <mesh position={[0, 0.62, 0]} geometry={heartGeo} material={innerCore} ref={heart} />
     </group>
