@@ -133,8 +133,6 @@ export default function SamvidScene() {
     [consents],
   );
 
-  const grantedCount = activeAttrs.length;
-
   return (
     <div className="samvid-stage">
       <Canvas
@@ -165,27 +163,13 @@ export default function SamvidScene() {
         />
       </Canvas>
 
-      <div className="samvid-hud">
-        <header>
-          <span className="samvid-mark">SAMVID</span>
-          <span className="samvid-sub">sovereign digital identity field</span>
-        </header>
-        <footer>
-          <p className="samvid-state">
-            {expanded ? "IDENTITY FIELD ACTIVE" : "IDENTITY LOCKED"}
-            <em>
-              {expanded
-                ? `${ATTRIBUTES.length} attributes inside the field · ${grantedCount} consent link${grantedCount === 1 ? "" : "s"} open`
-                : "touch the figure to unseal the protective field"}
-            </em>
-          </p>
-          <p className="samvid-hint">
-            {expanded
-              ? "Select an organization node to grant consent · select again to revoke · touch the figure to seal"
-              : "Drag to orbit the space"}
-          </p>
-        </footer>
-      </div>
+      <SamvidInterface
+        expanded={expanded}
+        onActivate={activate}
+        consents={consents}
+        onToggle={toggleConsent}
+      />
     </div>
   );
 }
+
