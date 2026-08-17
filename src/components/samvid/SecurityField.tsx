@@ -33,7 +33,7 @@ export function SecurityField({ sys }: { sys: React.MutableRefObject<Sys> }) {
   }, []);
 
   const panelMat = useMemo(
-    () => hologramMaterial({ color: PALETTE.field, inner: PALETTE.deep, opacity: 0.28, scan: 1.4, breath: 0.6 }),
+    () => hologramMaterial({ color: PALETTE.field, inner: PALETTE.deep, opacity: 0.16, scan: 1.4, breath: 0.6 }),
     [],
   );
   const innerShellMat = useMemo(
@@ -99,13 +99,13 @@ export function SecurityField({ sys }: { sys: React.MutableRefObject<Sys> }) {
     const p = sys.current.phase;
     panelMat.uniforms["uTime"]!.value = t;
     panelMat.uniforms["uPulse"]!.value = sys.current.pulse * 0.6;
-    panelMat.uniforms["uOpacity"]!.value = 0.05 + p * 0.3;
-    innerShellMat.opacity = 0.02 + p * 0.07;
-    trailMat.opacity = 0.05 + p * 0.32;
+    panelMat.uniforms["uOpacity"]!.value = 0.04 + p * 0.14;
+    innerShellMat.opacity = 0.012 + p * 0.032;
+    trailMat.opacity = 0.04 + p * 0.26;
     sparkMat.opacity = 0.1 + p * 0.6;
 
     if (group.current) {
-      const s = 0.22 + p * 0.9 + sys.current.pulse * 0.08;
+      const s = 0.2 + p * 0.72 + sys.current.pulse * 0.08;
       group.current.scale.setScalar(s);
       group.current.rotation.y += dt * 0.05;
     }

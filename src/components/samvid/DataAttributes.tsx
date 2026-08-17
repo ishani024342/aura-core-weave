@@ -30,7 +30,7 @@ function Attribute({
       new THREE.MeshBasicMaterial({
         color: PALETTE.data,
         transparent: true,
-        opacity: 0.16,
+        opacity: 0.1,
         side: THREE.DoubleSide,
         depthWrite: false,
         blending: THREE.AdditiveBlending,
@@ -49,7 +49,7 @@ function Attribute({
     [],
   );
   const sheetEdges = useMemo(
-    () => new THREE.EdgesGeometry(new THREE.PlaneGeometry(0.34, 0.44)),
+    () => new THREE.EdgesGeometry(new THREE.PlaneGeometry(0.28, 0.38)),
     [],
   );
 
@@ -88,7 +88,7 @@ function Attribute({
         {[0, 1, 2].map((i) => (
           <group key={i} rotation={[0, (i * Math.PI * 2) / 3, 0]}>
             <mesh position={[0.19, i * 0.04 - 0.04, 0]} material={sheetMat} raycast={() => null}>
-              <planeGeometry args={[0.34, 0.44]} />
+              <planeGeometry args={[0.28, 0.38]} />
             </mesh>
             <lineSegments
               geometry={sheetEdges}
@@ -141,7 +141,7 @@ function ChainLink({
 
   useFrame(() => {
     const p = Math.max(0, (sys.current.phase - 0.45) / 0.55);
-    mat.opacity = p * 0.42;
+    mat.opacity = p * 0.3;
     if (blocks.current) blocks.current.scale.setScalar(Math.max(0.001, p));
     if (packet.current) {
       const t = (sys.current.time * 0.18 + seed * 0.31) % 1;
