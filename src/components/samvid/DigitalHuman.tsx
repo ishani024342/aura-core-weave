@@ -151,6 +151,26 @@ export function DigitalHuman({
       {bodies.map((b, i) => (
         <mesh key={i} geometry={b.geo} material={surface} castShadow={false} />
       ))}
+      {/* joint caps so limbs read as one continuous cast form */}
+      <mesh position={[0, 0.06, 0.01]} material={surface} scale={[1.35, 0.85, 1]}>
+        <sphereGeometry args={[0.16, 32, 24]} />
+      </mesh>
+      {[1, -1].map((s) => (
+        <group key={s}>
+          <mesh position={[s * 0.2, 1.06, 0]} material={surface}>
+            <sphereGeometry args={[0.088, 28, 20]} />
+          </mesh>
+          <mesh position={[s * 0.29, 0.13, 0.11]} material={surface} scale={[1, 1.25, 0.7]}>
+            <sphereGeometry args={[0.032, 20, 16]} />
+          </mesh>
+          <mesh position={[s * 0.11, 0.02, 0.005]} material={surface}>
+            <sphereGeometry args={[0.13, 28, 20]} />
+          </mesh>
+          <mesh position={[s * 0.11, -1.075, 0.09]} material={surface} scale={[1, 0.55, 2.1]}>
+            <sphereGeometry args={[0.045, 24, 18]} />
+          </mesh>
+        </group>
+      ))}
       <mesh position={[0, 0.62, 0]} geometry={heartGeo} material={innerCore} ref={heart} />
     </group>
   );
