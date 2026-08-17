@@ -6,8 +6,10 @@ import { DigitalHuman } from "./DigitalHuman";
 import { SecurityField } from "./SecurityField";
 import { DataAttributes } from "./DataAttributes";
 import { Organizations } from "./Organizations";
+import { SamvidInterface } from "./Interface";
 import { PALETTE } from "@/lib/samvid/materials";
-import { ATTRIBUTES, ORGANIZATIONS, type ConsentState, type Sys } from "@/lib/samvid/state";
+import { ORGANIZATIONS, type ConsentState, type Sys } from "@/lib/samvid/state";
+
 
 function Ambient({ sys }: { sys: React.MutableRefObject<Sys> }) {
   const geo = useMemo(() => {
