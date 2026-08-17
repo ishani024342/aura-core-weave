@@ -99,8 +99,8 @@ export function SecurityField({ sys }: { sys: React.MutableRefObject<Sys> }) {
     const p = sys.current.phase;
     panelMat.uniforms["uTime"]!.value = t;
     panelMat.uniforms["uPulse"]!.value = sys.current.pulse * 0.6;
-    panelMat.uniforms["uOpacity"]!.value = 0.04 + p * 0.14;
-    innerShellMat.opacity = 0.012 + p * 0.032;
+    panelMat.uniforms["uOpacity"]!.value = 0.03 + p * 0.075;
+    innerShellMat.opacity = 0.01 + p * 0.022;
     trailMat.opacity = 0.04 + p * 0.26;
     sparkMat.opacity = 0.1 + p * 0.6;
 
@@ -148,7 +148,7 @@ export function SecurityField({ sys }: { sys: React.MutableRefObject<Sys> }) {
         <icosahedronGeometry args={[1.55, 2]} />
       </mesh>
       <mesh ref={shellB} material={innerShellMat} raycast={() => null}>
-        <icosahedronGeometry args={[3.1, 3]} />
+        <icosahedronGeometry args={[3.1, 2]} />
       </mesh>
 
       <group ref={trails}>

@@ -84,7 +84,7 @@ function Rig({ sys }: { sys: React.MutableRefObject<Sys> }) {
     s.time = state.clock.elapsedTime;
     s.phase = THREE.MathUtils.damp(s.phase, s.target, 1.6, dt);
     s.pulse = Math.max(0, s.pulse - dt * 1.1);
-    const dist = 5.2 + s.phase * 3.6;
+    const dist = 5.2 + s.phase * 4.6;
     const cur = camera.position.length();
     camera.position.multiplyScalar(THREE.MathUtils.damp(cur, dist, 2, dt) / cur);
   });
