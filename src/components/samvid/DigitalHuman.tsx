@@ -166,8 +166,8 @@ export function DigitalHuman({
           <mesh position={[s * 0.11, 0.02, 0.005]} material={surface}>
             <sphereGeometry args={[0.13, 28, 20]} />
           </mesh>
-          <mesh position={[s * 0.11, -1.075, 0.09]} material={surface} scale={[1, 0.55, 2.1]}>
-            <sphereGeometry args={[0.045, 24, 18]} />
+          <mesh position={[s * 0.11, -1.08, 0.055]} material={surface} scale={[1.15, 0.62, 2.6]}>
+            <sphereGeometry args={[0.058, 26, 20]} />
           </mesh>
         </group>
       ))}
