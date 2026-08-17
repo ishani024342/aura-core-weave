@@ -63,8 +63,8 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --background: oklch(0.16 0.04 255);
+  --foreground: oklch(0.95 0.03 210);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
@@ -141,4 +141,158 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+}
+
+/* ---------- SAMVID identity field ---------- */
+:root {
+  --void: oklch(0.14 0.045 258);
+  --void-deep: oklch(0.09 0.035 262);
+  --holo: oklch(0.88 0.13 205);
+  --holo-dim: oklch(0.72 0.11 210);
+  --gradient-void: radial-gradient(
+      120% 90% at 50% 42%,
+      oklch(0.26 0.09 250 / 0.55) 0%,
+      oklch(0.12 0.05 262 / 0.9) 45%,
+      var(--void-deep) 100%
+    );
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.samvid-root {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--gradient-void);
+  color: var(--holo);
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", monospace;
+}
+
+.samvid-stage,
+.samvid-stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.samvid-boot {
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--holo-dim);
+  opacity: 0.7;
+}
+
+.samvid-hud {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.1rem, 3vw, 2.4rem);
+  pointer-events: none;
+}
+
+.samvid-hud header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.samvid-mark {
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  letter-spacing: 0.62em;
+  color: var(--holo);
+  text-shadow: 0 0 22px oklch(0.8 0.14 205 / 0.55);
+}
+
+.samvid-sub,
+.samvid-hint {
+  font-size: 0.63rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--holo-dim);
+  opacity: 0.55;
+}
+
+.samvid-state {
+  font-size: 0.72rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--holo);
+  text-shadow: 0 0 16px oklch(0.8 0.14 205 / 0.4);
+}
+
+.samvid-state em,
+.samvid-tag em {
+  display: block;
+  margin-top: 0.35rem;
+  font-style: normal;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  color: var(--holo-dim);
+  opacity: 0.55;
+}
+
+.samvid-hud footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.samvid-label-layer,
+.samvid-label-layer * {
+  pointer-events: none !important;
+}
+
+.samvid-tag {
+  display: block;
+  pointer-events: none;
+  opacity: 0;
+  white-space: nowrap;
+  font-family: ui-monospace, "SFMono-Regular", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: oklch(0.92 0.12 175);
+  text-shadow: 0 0 14px oklch(0.85 0.13 175 / 0.6);
+  opacity: 0.75;
+  user-select: none;
+  transition: opacity 0.4s ease;
+}
+
+.samvid-tag.is-active {
+  opacity: 1;
+}
+
+.samvid-tag.is-org {
+  color: oklch(0.9 0.1 70);
+  text-shadow: 0 0 14px oklch(0.85 0.12 70 / 0.5);
+  text-align: center;
+}
+
+.samvid-tag.is-org.is-granted {
+  color: oklch(0.94 0.13 175);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
